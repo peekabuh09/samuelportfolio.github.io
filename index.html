@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel C. Espino — Virtual Assistant & Data Research Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0f14;
+  --bg: #f5f3ee;
+  --cream: #faf9f6;
+  --accent: #1847d4;
+  --accent2: #e85d2f;
+  --muted: #6e6e6e;
+  --border: rgba(13,15,20,0.1);
+  --card: #ffffff;
+  --tag-bg: rgba(24,71,212,0.08);
+  --tag-color: #1847d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(245,243,238,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 6%; height: 64px;
+}
+.nav-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--ink); text-decoration: none; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink); color: #fff;
+  padding: 9px 20px; border-radius: 4px;
+  font-size: 13px; font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+  transition: background .2s;
+}
+.nav-cta:hover { background: var(--accent); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  padding: 110px 6% 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 55vw; height: 100%;
+  background: var(--cream);
+  z-index: 0;
+}
+
+.hero-left { position: relative; z-index: 1; }
+.hero-right { position: relative; z-index: 1; display: flex; justify-content: center; }
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); background: var(--tag-bg);
+  padding: 5px 14px; border-radius: 2px; margin-bottom: 1.5rem;
+  animation: fadeUp .5s ease both;
+}
+
+.hero-left h1 {
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  animation: fadeUp .6s .1s ease both;
+}
+
+.hero-left h1 .accent { color: var(--accent); }
+.hero-left h1 .stroke {
+  -webkit-text-stroke: 2px var(--ink);
+  color: transparent;
+}
+
+.hero-desc {
+  font-size: 17px; font-weight: 400; line-height: 1.7; color: var(--muted);
+  max-width: 460px; margin-bottom: 2rem;
+  animation: fadeUp .6s .2s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp .6s .3s ease both;
+  margin-bottom: 2.5rem;
+}
+
+.btn-primary {
+  background: var(--ink); color: #fff;
+  padding: 14px 28px; border-radius: 4px;
+  font-size: 14px; font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+  transition: background .2s, transform .15s;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+.btn-outline {
+  border: 1.5px solid var(--ink); color: var(--ink);
+  padding: 13px 28px; border-radius: 4px;
+  font-size: 14px; font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--ink); color: #fff; }
+
+.hero-stats {
+  display: flex; gap: 32px;
+  animation: fadeUp .6s .4s ease both;
+}
+.stat-item {}
+.stat-num { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--ink); line-height: 1; }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.02em; }
+
+/* Profile card */
+.profile-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: 0 20px 60px rgba(13,15,20,0.1), 0 4px 12px rgba(13,15,20,0.06);
+  width: 100%; max-width: 380px;
+  animation: fadeUp .7s .2s ease both;
+}
+
+.profile-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #3b6bff);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: #fff;
+  margin-bottom: 1rem;
+}
+
+.profile-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.profile-card .role { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 12px; }
+.profile-card .location { font-size: 13px; color: var(--muted); margin-bottom: 1.25rem; }
+
+.profile-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.5rem; }
+.ptag {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  background: var(--tag-bg); color: var(--tag-color);
+  padding: 4px 10px; border-radius: 3px;
+}
+
+.profile-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
+
+.profile-contact a {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  margin-bottom: 8px; transition: color .2s;
+}
+.profile-contact a:hover { color: var(--accent); }
+.contact-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--tag-bg); display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+
+.avail-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(0,164,100,0.08); border: 1px solid rgba(0,164,100,0.2);
+  border-radius: 6px; padding: 10px 14px;
+  margin-top: 1rem;
+}
+.avail-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a464; animation: pulse2 2s infinite; }
+@keyframes pulse2 { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+.avail-text { font-size: 12px; color: #00a464; font-weight: 600; letter-spacing: 0.03em; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── SECTION SHARED ── */
+section { padding: 90px 6%; }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+}
+.section-title {
+  font-size: clamp(30px, 3.5vw, 44px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.1;
+  margin-bottom: 1rem; color: var(--ink);
+}
+.section-sub {
+  font-size: 16px; color: var(--muted); line-height: 1.7;
+  max-width: 540px; margin-bottom: 3rem;
+}
+
+/* ── ABOUT / LINKEDIN SECTION ── */
+#about { background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.about-headline {
+  font-size: clamp(28px, 3vw, 40px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.25rem;
+}
+.about-text { font-size: 15.5px; line-height: 1.75; color: var(--muted); margin-bottom: 1.5rem; }
+.about-text strong { color: var(--ink); font-weight: 600; }
+
+.linkedin-box {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+.linkedin-box-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.linkedin-headline-text {
+  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
+  color: var(--ink); line-height: 1.3; margin-bottom: 10px;
+}
+.linkedin-summary-text {
+  font-size: 13.5px; line-height: 1.7; color: var(--muted);
+}
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 14px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+  background: var(--tag-bg); color: var(--accent);
+  border: none; cursor: pointer; padding: 7px 14px; border-radius: 4px;
+  transition: background .2s;
+}
+.copy-btn:hover { background: rgba(24,71,212,0.15); }
+.copy-btn.copied { background: rgba(0,164,100,0.1); color: #00a464; }
+
+/* ── SKILLS ── */
+#skills { background: var(--bg); }
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.skill-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  transition: transform .2s, box-shadow .2s;
+}
+.skill-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(13,15,20,0.08); }
+.skill-icon { font-size: 28px; margin-bottom: 12px; }
+.skill-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.skill-card p { font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+/* ── PORTFOLIO ── */
+#portfolio { background: var(--cream); }
+.portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.port-card {
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform .2s, box-shadow .2s;
+}
+.port-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(13,15,20,0.1); }
+.port-thumb {
+  height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.port-thumb-dental { background: linear-gradient(135deg, #e8f0ff 0%, #ccdcff 100%); }
+.port-thumb-zapier { background: linear-gradient(135deg, #fff3ee 0%, #ffddd0 100%); }
+.port-thumb-crm { background: linear-gradient(135deg, #eefff9 0%, #c3f0e0 100%); }
+.port-thumb-research { background: linear-gradient(135deg, #f5f0ff 0%, #e0d4ff 100%); }
+
+.port-badge {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 3px;
+}
+.badge-live { background: rgba(0,164,100,0.12); color: #00a464; }
+.badge-auto { background: rgba(232,93,47,0.12); color: #e85d2f; }
+.badge-demo { background: var(--tag-bg); color: var(--tag-color); }
+
+.port-body { padding: 22px; }
+.port-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.port-body p { font-size: 13px; line-height: 1.6; color: var(--muted); margin-bottom: 14px; }
+.port-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.port-tag {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  background: var(--tag-bg); color: var(--tag-color);
+  padding: 3px 9px; border-radius: 3px;
+}
+
+/* ── ZAPIER SECTION ── */
+#zapier {
+  background: var(--ink);
+  color: #fff;
+}
+#zapier .section-label { color: #e85d2f; }
+#zapier .section-title { color: #fff; }
+#zapier .section-sub { color: rgba(255,255,255,0.55); }
+
+.zap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.zap-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 26px 22px;
+  transition: background .2s, transform .2s;
+}
+.zap-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+.zap-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.zap-icon { font-size: 24px; }
+.zap-arrow { font-size: 16px; color: #e85d2f; }
+.zap-card h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.zap-card p { font-size: 12.5px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+.zap-steps { margin-top: 10px; }
+.zap-step {
+  font-size: 11.5px; color: rgba(255,255,255,0.6);
+  padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 6px;
+}
+.zap-step:last-child { border-bottom: none; }
+.step-num {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(232,93,47,0.2); color: #e85d2f;
+  font-size: 10px; font-weight: 700; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--bg); }
+.exp-list { max-width: 700px; }
+.exp-item { display: flex; gap: 24px; margin-bottom: 40px; position: relative; }
+.exp-item:not(:last-child)::after {
+  content: '';
+  position: absolute; left: 19px; top: 44px; bottom: -12px;
+  width: 1px; background: var(--border);
+}
+.exp-dot {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--tag-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.exp-content {}
+.exp-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.exp-company { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.exp-date { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.exp-bullets { list-style: none; }
+.exp-bullets li {
+  font-size: 13.5px; color: var(--muted); line-height: 1.65;
+  padding-left: 14px; position: relative; margin-bottom: 4px;
+}
+.exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+/* ── CTA ── */
+#contact { background: var(--cream); text-align: center; }
+.cta-inner { max-width: 560px; margin: 0 auto; }
+.cta-inner .section-title { margin-bottom: .75rem; }
+.cta-inner .section-sub { margin: 0 auto 2rem; }
+.cta-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.cta-link {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--card); border: 1.5px solid var(--border);
+  color: var(--ink); text-decoration: none;
+  padding: 13px 22px; border-radius: 6px;
+  font-size: 14px; font-weight: 600;
+  transition: all .2s;
+}
+.cta-link:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+.cta-link.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cta-link.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 24px 6%;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12.5px; color: var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  #hero, .about-grid { grid-template-columns: 1fr; }
+  #hero::before { display: none; }
+  .hero-right { display: none; }
+  .skills-grid, .zap-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  nav .nav-links { display: none; }
+  .skills-grid, .zap-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; }
+}
+</style>
+</head>
+   <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmnqup9km04d4pk1pb7ibu6q4"></script>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-name">Samuel C. Espino</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#zapier">Automations</a>
+    <a href="#experience">Experience</a>
+  </div>
+  <a href="mailto:espinosam09@yahoo.com" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for Remote Work</div>
+    <h1>
+      Virtual Assistant<br>
+      <span class="stroke">&amp; Data</span><br>
+      <span class="accent">Specialist</span>
+    </h1>
+    <p class="hero-desc">
+      Detail-driven VA with 2+ years of experience in data research, CRM management, email support, and workflow automation. I turn scattered data into clean systems and repetitive tasks into automated flows.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:espinosam09@yahoo.com" class="btn-primary">📧 Email Me</a>
+      <a href="#portfolio" class="btn-outline">View Portfolio</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years VA Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Zapier Automations Built</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Remote Ready</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="profile-card">
+      <div class="profile-avatar">SE</div>
+      <h3>Samuel C. Espino</h3>
+      <div class="role">Virtual Assistant · Data Research</div>
+      <div class="location">📍 Panukulan, Quezon, Philippines</div>
+      <div class="profile-tags">
+        <span class="ptag">Data Entry</span>
+        <span class="ptag">CRM</span>
+        <span class="ptag">Zapier</span>
+        <span class="ptag">Email Support</span>
+        <span class="ptag">Google Sheets</span>
+        <span class="ptag">Lead Research</span>
+        <span class="ptag">Amazon FBA</span>
+      </div>
+      <div class="profile-divider"></div>
+      <div class="profile-contact">
+        <a href="mailto:espinosam09@yahoo.com">
+          <div class="contact-icon">✉️</div>
+          espinosam09@yahoo.com
+        </a>
+        <a href="tel:09686417674">
+          <div class="contact-icon">📞</div>
+          0968 641 7674
+        </a>
+        <a href="https://www.linkedin.com/in/samuel-espino-2054b1277/" target="_blank">
+          <div class="contact-icon">💼</div>
+          linkedin.com/in/samuel-espino-2054b1277
+        </a>
+      </div>
+      <div class="avail-badge">
+        <div class="avail-dot"></div>
+        <div class="avail-text">Open to freelance & full-time remote roles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + LINKEDIN OPTIMIZATION -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">About Me</div>
+      <div class="about-headline">Organized. Reliable.<br>Automation-Minded.</div>
+      <p class="about-text">
+        I'm a Virtual Assistant and data professional with hands-on experience supporting <strong>Amazon FBA operations</strong> and managing <strong>client accounts at a financial institution</strong>. I thrive in remote environments and I'm trained to keep information clean, accurate, and organized.
+      </p>
+      <p class="about-text">
+        Beyond traditional VA work, I'm actively expanding into <strong>workflow automation using Zapier</strong> — connecting tools like Google Sheets, Gmail, and CRM systems to eliminate manual, repetitive work. I hold a Bachelor's in Computer Technology, which gives me a technical edge when solving digital workflow problems.
+      </p>
+      <p class="about-text">
+        Currently seeking roles in <strong>lead generation, data research, CRM management</strong>, or VA positions where I can bring both precision and a systems-thinking mindset.
+      </p>
+    </div>
+    <div>
+      <div class="section-label">LinkedIn Profile Copy</div>
+      <div style="margin-bottom: 16px;">
+        <div class="linkedin-box">
+          <div class="linkedin-box-label">🔵 Headline (220 chars max)</div>
+          <div class="linkedin-headline-text" id="li-headline">Virtual Assistant | Data Research & CRM Specialist | Zapier Automation | Amazon FBA | Remote-Ready | Available Now</div>
+          <button class="copy-btn" onclick="copyText('li-headline', this)">📋 Copy Headline</button>
+        </div>
+      </div>
+      <div class="linkedin-box">
+        <div class="linkedin-box-label">🔵 About Section (Summary)</div>
+        <div class="linkedin-summary-text" id="li-summary">Detail-oriented Virtual Assistant with 2+ years of remote experience in data research, CRM management, and client communication. Proven track record managing Amazon FBA seller records at GETIDA and handling financial client accounts at CARD Inc.
+
+I specialize in:
+✅ Lead research & data collection (Apollo, Google Maps, LinkedIn)
+✅ CRM & database management
+✅ Email communication & client support
+✅ Spreadsheet management (Excel, Google Sheets)
+✅ Workflow automation with Zapier
+
+With a Bachelor's degree in Computer Technology, I bring a tech-forward mindset to administrative and data tasks. I'm fast, organized, and committed to accuracy.
+
+📩 Open to freelance and full-time remote opportunities.
+Let's connect: espinosam09@yahoo.com</div>
+        <button class="copy-btn" onclick="copyText('li-summary', this)">📋 Copy Summary</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Core Skills</div>
+  <h2 class="section-title">What I Bring to the Table</h2>
+  <p class="section-sub">A combination of admin precision and digital-first thinking.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <h4>Lead Research & Data Collection</h4>
+      <p>Finding and verifying contact info using Google Maps, LinkedIn, Apollo, and manual research methods.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <h4>Spreadsheet Management</h4>
+      <p>Organizing, cleaning, and maintaining data in Excel and Google Sheets with accuracy and speed.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <h4>Zapier Automation</h4>
+      <p>Building no-code workflows that connect apps like Gmail, Google Sheets, and CRMs to save hours of manual work.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📧</div>
+      <h4>Email & Client Support</h4>
+      <p>Professional email communication, inbox management, and client coordination across digital platforms.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <h4>CRM & Database Updating</h4>
+      <p>Keeping customer records current and accurate across CRM platforms and internal databases.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🛒</div>
+      <h4>Amazon FBA Support</h4>
+      <p>Managing seller records, transaction data, and account reconciliation for Amazon sellers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Projects & Work Samples</h2>
+  <p class="section-sub">Real deliverables that demonstrate my skills in action.</p>
+  <div class="portfolio-grid">
+    <div class="port-card">
+      <div class="port-thumb port-thumb-dental">
+        🦷
+        <span class="port-badge badge-live">Live Page</span>
+      </div>
+      <div class="port-body">
+        <h4>Dental Clinic Lead Capture Page</h4>
+        <p>Designed and built a full landing page for "Cuteness Teeth Dental" — a fictional dental clinic in Metro Manila. Includes a service menu, testimonials, before/after section, and a lead form to capture consultation bookings.</p>
+        <div class="port-tags">
+          <span class="port-tag">HTML/CSS</span>
+          <span class="port-tag">Lead Capture</span>
+          <span class="port-tag">Form Design</span>
+          <span class="port-tag">Client Site</span>
+        </div>
+      </div>
+    </div>
+    <div class="port-card">
+      <div class="port-thumb port-thumb-zapier">
+        ⚡
+        <span class="port-badge badge-auto">Automation</span>
+      </div>
+      <div class="port-body">
+        <h4>Lead Form → CRM Auto-Entry (Zapier)</h4>
+        <p>Built a Zapier workflow that captures new form submissions (e.g., from the dental landing page) and automatically adds the lead to a Google Sheet CRM, sends a confirmation email, and notifies the team via email alert.</p>
+        <div class="port-tags">
+          <span class="port-tag">Zapier</span>
+          <span class="port-tag">Google Sheets</span>
+          <span class="port-tag">Gmail</span>
+          <span class="port-tag">CRM</span>
+        </div>
+      </div>
+    </div>
+    <div class="port-card">
+      <div class="port-thumb port-thumb-crm">
+        📋
+        <span class="port-badge badge-demo">Sample</span>
+      </div>
+      <div class="port-body">
+        <h4>Amazon FBA Account Reconciliation Log</h4>
+        <p>Maintained a structured Google Sheets tracker for Amazon seller transaction data — categorizing refunds, inventory adjustments, and fee discrepancies for monthly reconciliation (from my GETIDA role).</p>
+        <div class="port-tags">
+          <span class="port-tag">Google Sheets</span>
+          <span class="port-tag">Amazon FBA</span>
+          <span class="port-tag">Data Entry</span>
+          <span class="port-tag">Reconciliation</span>
+        </div>
+      </div>
+    </div>
+    <div class="port-card">
+      <div class="port-thumb port-thumb-research">
+        🔍
+        <span class="port-badge badge-demo">Sample</span>
+      </div>
+      <div class="port-body">
+        <h4>Lead Research Spreadsheet (B2B)</h4>
+        <p>Compiled a clean, organized lead list of 50+ business contacts using LinkedIn and Google Maps — including business name, owner name, phone, email, location, and notes. Formatted for CRM import.</p>
+        <div class="port-tags">
+          <span class="port-tag">LinkedIn</span>
+          <span class="port-tag">Google Maps</span>
+          <span class="port-tag">Lead Research</span>
+          <span class="port-tag">Excel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZAPIER AUTOMATIONS -->
+<section id="zapier">
+  <div class="section-label">Zapier Automations</div>
+  <h2 class="section-title">Workflows I Can Build for You</h2>
+  <p class="section-sub">Basic but powerful automations that eliminate repetitive tasks and keep your data flowing between apps.</p>
+  <div class="zap-grid">
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">📋</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">📊</span>
+      </div>
+      <h4>Form → Google Sheets CRM</h4>
+      <p>Automatically log new leads from any form into a Google Sheet as a new row.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: New form submission</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Add row to Google Sheet</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Instant, organized lead log</div>
+      </div>
+    </div>
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">📊</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">✉️</span>
+      </div>
+      <h4>New Lead → Email Notification</h4>
+      <p>Send an automatic email alert whenever a new lead is added to your spreadsheet.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: New row in Google Sheet</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Send email via Gmail</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Team notified immediately</div>
+      </div>
+    </div>
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">✉️</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">📊</span>
+      </div>
+      <h4>Email → Data Logger</h4>
+      <p>Auto-capture specific email info (like order confirmations) and save it to a spreadsheet.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: New email with label</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Extract & log to Sheet</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Zero manual data entry</div>
+      </div>
+    </div>
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">📋</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">✉️</span>
+      </div>
+      <h4>Form → Auto-Reply Email</h4>
+      <p>Send a personalized confirmation email automatically when someone submits a form.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: New form submission</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Send personalized Gmail</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Professional auto-response</div>
+      </div>
+    </div>
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">📊</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">📅</span>
+      </div>
+      <h4>Sheet Update → Calendar Event</h4>
+      <p>Automatically create a Google Calendar event when a new appointment row is added to a sheet.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: New/updated row in Sheet</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Create Calendar event</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Appointments auto-scheduled</div>
+      </div>
+    </div>
+    <div class="zap-card">
+      <div class="zap-top">
+        <span class="zap-icon">✉️</span>
+        <span class="zap-arrow">→</span>
+        <span class="zap-icon">📋</span>
+      </div>
+      <h4>Gmail → Task Creator</h4>
+      <p>Turn specific incoming emails into follow-up tasks automatically so nothing falls through the cracks.</p>
+      <div class="zap-steps">
+        <div class="zap-step"><span class="step-num">1</span>Trigger: Email with keyword/label</div>
+        <div class="zap-step"><span class="step-num">2</span>Action: Create task in Trello/Sheet</div>
+        <div class="zap-step"><span class="step-num">3</span>Result: Automated task management</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work Experience</div>
+  <h2 class="section-title">Professional Background</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-dot">🛒</div>
+      <div class="exp-content">
+        <div class="exp-title">Virtual Assistant — Amazon FBA</div>
+        <div class="exp-company">GETIDA</div>
+        <div class="exp-date">Aug 2023 – Jan 2025 · Remote</div>
+        <ul class="exp-bullets">
+          <li>Managed online records and transaction data for Amazon seller accounts</li>
+          <li>Communicated with clients through email and online platforms</li>
+          <li>Maintained accurate spreadsheets and documentation</li>
+          <li>Assisted in account review and reconciliation processes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot">🏦</div>
+      <div class="exp-content">
+        <div class="exp-title">Account Officer</div>
+        <div class="exp-company">CARD Inc., Infanta, Quezon</div>
+        <div class="exp-date">Sept 2025 – Feb 2026</div>
+        <ul class="exp-bullets">
+          <li>Managed and monitored client accounts and financial records</li>
+          <li>Assisted members with documentation and account applications</li>
+          <li>Conducted field visits and client coordination</li>
+          <li>Maintained organized reports and accurate member information</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot">🏭</div>
+      <div class="exp-content">
+        <div class="exp-title">Packaging Worker</div>
+        <div class="exp-company">Euro-Med Laboratories Philippines Inc.</div>
+        <div class="exp-date">Jan 2017 – Sept 2017</div>
+        <ul class="exp-bullets">
+          <li>Handled packaging operations with strong attention to detail</li>
+          <li>Maintained compliance with company procedures and standards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cta-inner">
+    <div class="section-label">Let's Work Together</div>
+    <h2 class="section-title">Open to Freelance<br>& Remote Roles</h2>
+    <p class="section-sub">Whether you need a reliable VA, a data researcher, or someone to set up your Zapier automations — I'm ready.</p>
+    <div class="cta-links">
+      <a href="mailto:espinosam09@yahoo.com" class="cta-link primary">✉️ espinosam09@yahoo.com</a>
+      <a href="tel:09686417674" class="cta-link">📞 0968 641 7674</a>
+      <a href="https://www.linkedin.com/in/samuel-espino-2054b1277/" target="_blank" class="cta-link">💼 LinkedIn Profile</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Samuel C. Espino · Virtual Assistant & Data Specialist</span>
+  <span>Panukulan, Quezon, Philippines 🇵🇭</span>
+</footer>
+
+<script>
+function copyText(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = id === 'li-headline' ? '📋 Copy Headline' : '📋 Copy Summary';
+      btn.classList.remove('copied');
+    }, 2500);
+  });
+}
+</script>
+</body>
+</html>
